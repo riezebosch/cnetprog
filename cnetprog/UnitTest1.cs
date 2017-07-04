@@ -162,14 +162,13 @@ namespace cnetprog
         {
             Shape shape = new Rectangle();
 
-            //switch (shape)
-            //{
-            //    case Rectangle:
-            //        break;
-            //    default:
-
-            //        break;
-            //}
+            switch (shape)
+            {
+                case Rectangle r:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private class Rectangle : Shape
@@ -267,7 +266,7 @@ namespace cnetprog
         private class MyClass
         {
             private int getal;
-            public int Getal { set { getal = value;  } get { return getal; } }
+            public int Getal { set { getal = value; } get { return getal; } }
 
             public int GetalMaarDanAutoImplemented { get; set; }
 
@@ -275,6 +274,39 @@ namespace cnetprog
             {
                 return GetalMaarDanAutoImplemented.ToString();
             }
+        }
+
+        [Fact]
+        public void SlimmeCompilerEnStrings()
+        {
+            string a = "asdf";
+            string b = "asdf";
+
+            Assert.True(Object.ReferenceEquals(a, b));
+
+            string c = "as" + "df";
+            Assert.True(Object.ReferenceEquals(a, c));
+
+            string d = "as";
+            d += "df";
+            Assert.False(Object.ReferenceEquals(a, d));
+        }
+
+        [Fact]
+        public void OptionalParameters()
+        {
+            var result = DoeIets(true);
+            Assert.True(result.b);
+            Assert.Equal(0, result.i);
+
+            var result2 = DoeIets(i: 3);
+            Assert.False(result2.b);
+            Assert.Equal(3, result2.i);
+        }
+
+        private (bool b, int i) DoeIets(bool b = false, int i = 0)
+        {
+            return (b, i);
         }
     }
 
