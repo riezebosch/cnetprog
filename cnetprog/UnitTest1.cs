@@ -1,15 +1,25 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Xunit;
+using Xunit.Abstractions;
 using static Xunit.Assert;
 
 namespace cnetprog
 {
     public class UnitTest1
     {
+        private static bool _uitgevoerd;
+        private readonly ITestOutputHelper _output;
+
+        public UnitTest1(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public void Test1()
         {
@@ -308,7 +318,161 @@ namespace cnetprog
         {
             return (b, i);
         }
+
+        [Fact]
+        public void ThrowExceptionsDemo()
+        {
+            try
+            {
+                throw new Exception("hoi");
+            }
+            catch (Exception ex) when (ex.Message != "hoi")
+            {
+                Assert.NotEqual("hoi", ex.Message);
+            }
+            catch(Exception ex)
+            {
+                Assert.Equal("hoi", ex.Message);
+            }
+        }
+
+        [Fact]
+        public void WordtDeFinallyAtijdUitgevoerdZelfsBijEenVoortijdigeReturn()
+        {
+            DoeEenTryFinally();
+            Assert.True(_uitgevoerd);
+        }
+
+        private static void DoeEenTryFinally()
+        {
+            try
+            {
+                return;
+            }
+            finally
+            {
+                _uitgevoerd = true;
+            }
+        }
+
+        [Fact]
+        public void WatHeeftUsingMetEenTryFinallyTeMaken()
+        {
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                DieIetsDoetMetExternalResources resource = new DieIetsDoetMetExternalResources();
+                try
+                {
+                    resource.Write();
+                }
+                finally
+                {
+                    resource?.CleanUp();
+                }
+            });
+        }
+
+        [Fact]
+        public void WatHeeftUsingMetEenTryFinallyTeMakenMaarDanMetUsing()
+        {
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                using (var resource = new DieIetsDoetMetExternalResources())
+                {
+                    resource.Write();
+                }
+            });
+        }
+
+        class DieIetsDoetMetExternalResources : IDisposable
+        {
+            private IntPtr externalResource;
+
+            public void Write()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void CleanUp()
+            {
+                externalResource = IntPtr.Zero;
+            }
+
+            public void Dispose()
+            {
+                CleanUp();
+            }
+        }
+
+        [Fact]
+        public void WaaromEenThrowInEenFinallyEenSlechtIdeeIs()
+        {
+            // Want er is nog een andere exception
+            // die nu opgegeten wordt door de OutOfMemoryException
+            // De oorspronkelijke exception is helaas verloren gegaan.
+            Assert.Throws<OutOfMemoryException>(() => ThrowSomething("asdf"));
+        }
+
+        private int ThrowSomething(string input)
+        {
+            try
+            {
+                int.Parse(input);
+            }
+            finally
+            {
+                throw new OutOfMemoryException();
+            }
+        }
+
+        [Fact]
+        public void RethrowVanException()
+        {
+            try
+            {
+                RethrowException(true);
+            }
+            catch (Exception ex)
+            {
+                _output.WriteLine(ex.StackTrace);
+            }
+
+
+            try
+            {
+                RethrowException(false);
+            }
+            catch (Exception ex)
+            {
+                _output.WriteLine(ex.StackTrace);
+            }
+        }
+
+        private void RethrowException(bool zoalshethoort)
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                if (zoalshethoort)
+                {
+                    throw;
+                }
+
+                throw ex;
+            }
+        }
+
+        [Fact]
+        public void DebugWrite()
+        {
+            Debug.WriteLine("hoi");
+        }
     }
+
+
 
     namespace Nested
     {
