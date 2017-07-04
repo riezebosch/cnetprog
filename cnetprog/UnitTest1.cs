@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -471,9 +474,104 @@ namespace cnetprog
         {
             Debug.WriteLine("hoi");
         }
+
+        [Fact]
+        public void EvenCheckenOfDatMetDeStructsNogSteedsZoIs()
+        {
+            var s = new MyStruct2(3);
+        }
+
+        struct MyStruct2
+        {
+            public MyStruct2(int v) : this()
+            {
+                MyProperty = 3;
+            }
+
+            public int MyProperty { get; set; }
+        }
+
+        [Fact]
+        public void IndexerDemo()
+        {
+            int[] items = { 1, 2, 3, 4 };
+            var getal = items[0];
+
+            var demo = new ClassMetIndexer();
+            var i = demo[3];
+            var s = demo["input"];
+
+            demo["input"] = 6;
+
+            demo
+                .GetType()
+                .GetTypeInfo()
+                .GetMethods()
+                .ToList()
+                .ForEach(m => _output.WriteLine(m.ToString()));
+        }
+
+        [Fact]
+        public void LinqDemo()
+        {
+            var people = new List<Person>
+            {
+                new Person
+                {
+                    Name = "Pietje",
+                    Age = 31
+                },
+                new Person
+                {
+                    Name = "Langdraad",
+                    Age = 54
+                }
+            };
+
+            var query = people
+                .Where(p => p.Age > 35)
+                .OrderBy(p => p.Name)
+                .ThenByDescending(p => p.Age);
+
+            var query2 = from p in people
+                         where p.Age > 35
+                         orderby p.Name, p.Age descending
+                         select p;
+
+            
+        }
+
+        private class ClassMetIndexer
+        {
+            private int _backingfield = 3;
+
+            public int this[int index]
+            {
+                get { return _backingfield; }
+            }
+
+            public int this[string index]
+            {
+                get { return _backingfield; }
+                set { _backingfield = value; }
+            }
+
+            private int myVar;
+
+            public int MyProperty
+            {
+                get { return myVar; }
+                set { myVar = value; }
+            }
+
+        }
+
+        private class Person
+        {
+            public string Name { get; internal set; }
+            public int Age { get; internal set; }
+        }
     }
-
-
 
     namespace Nested
     {
@@ -493,4 +591,6 @@ namespace cnetprog
         Lopen = 0b0100,
         AllesBijElkaar = 0b11111111111
     }
+
+
 }

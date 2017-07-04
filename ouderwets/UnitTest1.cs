@@ -19,7 +19,7 @@ namespace ouderwets
             }
 
             Console.WriteLine();
-
+            
             try
             {
                 RethrowException(false);
