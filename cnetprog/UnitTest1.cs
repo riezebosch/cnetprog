@@ -437,6 +437,7 @@ namespace cnetprog
                 _output.WriteLine(ex.StackTrace);
             }
 
+            _output.WriteLine("");
 
             try
             {
@@ -452,7 +453,7 @@ namespace cnetprog
         {
             try
             {
-                throw new Exception();
+                int.Parse("asdf");
             }
             catch (Exception ex)
             {

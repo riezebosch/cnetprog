@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cnetprog", "cnetprog\cnetprog.csproj", "{D82F13B2-F17B-49B7-BE18-19C0CD99F32B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ouderwets", "ouderwets\ouderwets.csproj", "{4419323C-5809-4BAF-A148-2735E508AC54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D82F13B2-F17B-49B7-BE18-19C0CD99F32B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D82F13B2-F17B-49B7-BE18-19C0CD99F32B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D82F13B2-F17B-49B7-BE18-19C0CD99F32B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4419323C-5809-4BAF-A148-2735E508AC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4419323C-5809-4BAF-A148-2735E508AC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4419323C-5809-4BAF-A148-2735E508AC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4419323C-5809-4BAF-A148-2735E508AC54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
