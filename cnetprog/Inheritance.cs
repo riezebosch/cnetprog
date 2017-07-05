@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Xunit;
@@ -224,6 +225,84 @@ namespace cnetprog
                     b = 1;
                 }
             }
+        }
+
+        abstract class VirtualEnAbstractDemoBase
+        {
+            public VirtualEnAbstractDemoBase(int getal)
+            {
+            }
+
+            public abstract void DoeIets();
+
+            protected internal virtual int HalfFabrikaat()
+            {
+                return 5;
+            }
+        }
+
+        class VirtualEnAbstractDemoDerived : VirtualEnAbstractDemoBase
+        {
+            public VirtualEnAbstractDemoDerived() : this(5)
+            {
+
+            }
+
+            public VirtualEnAbstractDemoDerived(int getal) : base(getal)
+            {
+
+            }
+
+            public override void DoeIets()
+            {
+                this.HalfFabrikaat();
+                HalfFabrikaat();
+
+                base.HalfFabrikaat();
+            }
+
+            protected internal sealed override int HalfFabrikaat()
+            {
+                return base.HalfFabrikaat() * 3;
+            }
+        }
+
+        [Fact]
+        public void DemoVanInheritance()
+        {
+            new VirtualEnAbstractDemoDerived();
+        }
+
+
+        [Fact]
+        public void ExtensionMethodDemo()
+        {
+            string input = "pietje puk";
+            string result1 = StringHelpers.RemoveVowels(input);
+            string result2 = input.RemoveVowels();
+            
+            Assert.Equal("ptj pk", result1);
+            Assert.Equal("ptj pk", result2);
+        }
+
+        [Fact]
+        public void WatDoetDeleteAlsEenFileNietBestaat()
+        {
+            File.Delete("nietbestaandefile.nogiets");
+            Path.Combine("first", "second", "CasIngMoetOokNogMee");
+        }
+    }
+
+    static class StringHelpers
+    {
+        public static string RemoveVowels(this string input)
+        {
+            return input
+                .Replace("a", "")
+                .Replace("e", "")
+                .Replace("i", "")
+                .Replace("o", "")
+                .Replace("u", "");
         }
     }
 }
