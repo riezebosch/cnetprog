@@ -333,7 +333,7 @@ namespace cnetprog
             {
                 Assert.NotEqual("hoi", ex.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Assert.Equal("hoi", ex.Message);
             }
@@ -538,8 +538,13 @@ namespace cnetprog
                          orderby p.Name, p.Age descending
                          select p;
 
-            
+            var dict = people.ToDictionary(p => p.Name);
+            Assert.Equal(31, dict["Pietje"].Age);
+
+            var lookup = people.ToLookup(p => p.Name);
+            Assert.Equal(1, lookup["Pietje"].Count());
         }
+
 
         private class ClassMetIndexer
         {
@@ -570,6 +575,36 @@ namespace cnetprog
         {
             public string Name { get; internal set; }
             public int Age { get; internal set; }
+        }
+
+
+        [Fact]
+        public void NullableStructInLinqDemo()
+        {
+            int[] items = { 1, 2, 3, 4 };
+
+            var item = items
+                .Cast<int?>()
+                .FirstOrDefault(i => i > 13);
+            Assert.Null(item);
+
+            var item2 = items
+                .Where(i => i > 13)
+                .DefaultIfEmpty(-1)
+                .First();
+            Assert.Equal(-1, item2);
+        }
+
+        [Fact]
+        public void SubtleStruct()
+        {
+            MyStruct s1;
+            s1.getal = 3;
+
+            MyStruct s2;
+            s2.getal = 3;
+
+            Assert.Equal(s1, s2);
         }
     }
 
