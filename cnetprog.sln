@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp1.Tests", "WinFormsApp1.Tests\WinFormsApp1.Tests.csproj", "{951CC744-362B-4181-8BC0-EF2DD2D75421}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkOudDemo", "EntityFrameworkOudDemo\EntityFrameworkOudDemo.csproj", "{26B83383-B4C2-4335-A823-BC6789C041BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{951CC744-362B-4181-8BC0-EF2DD2D75421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{951CC744-362B-4181-8BC0-EF2DD2D75421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{951CC744-362B-4181-8BC0-EF2DD2D75421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B83383-B4C2-4335-A823-BC6789C041BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B83383-B4C2-4335-A823-BC6789C041BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B83383-B4C2-4335-A823-BC6789C041BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B83383-B4C2-4335-A823-BC6789C041BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
