@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
+using System.Linq;
 
 namespace ouderwets
 {
@@ -47,5 +49,22 @@ namespace ouderwets
             }
         }
 
+        [TestMethod]
+        public void ImmutableStructDemo()
+        {
+            var s = new ImmutableStruct(data: 5);
+            var field = s.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic).Single();
+            Assert.IsTrue(field.IsInitOnly);
+        }
+
+        private struct ImmutableStruct
+        {
+            public int Data { get; }
+
+            public ImmutableStruct(int data)
+            {
+                this.Data = data;
+            }
+        }
     }
 }
