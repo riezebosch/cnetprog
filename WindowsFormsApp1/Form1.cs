@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +13,9 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        private CancellationTokenSource cts;
+        private CancellationToken token;
+
         public Form1()
         {
             InitializeComponent();
@@ -19,28 +23,37 @@ namespace WindowsFormsApp1
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            //Task.Run(() => Fib(42)).ContinueWith(t => label1.Text = t.Result.ToString(), TaskScheduler.FromCurrentSynchronizationContext());
+            button1.Enabled = !(button2.Enabled = true);
+
+            cts?.Cancel();
+            token = (cts = new CancellationTokenSource()).Token;
 
             var result1 = Task.Run(() => Fib(42));
-            var result2 = Task.Run(() => Fib(41));
-            var result3 = Task.Run<int>(async () => {
-                await Task.Delay(500);
-                throw new OutOfMemoryException();
-            });
+            var result2 = Task.Run(() => Fib(41), cts.Token);
 
             try
             {
-                var first = await await Task.WhenAny(result1, result2, result3);
+                var first = await await Task.WhenAny(result1, result2);
                 label1.Text = first.ToString();
+            }
+            catch (OperationCanceledException)
+            {
+                label1.Text = "Operation was cancelled";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            finally
+            {
+                button1.Enabled = !(button2.Enabled = false);
+            }
         }
 
-        public static int Fib(int n)
+        public int Fib(int n)
         {
+            token.ThrowIfCancellationRequested();
+
             if (n <= 1)
                 return n;
 
@@ -49,7 +62,7 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            cts?.Cancel();
         }
     }
 }
