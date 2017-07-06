@@ -28,8 +28,10 @@ namespace WindowsFormsApp1
             cts?.Cancel();
             token = (cts = new CancellationTokenSource()).Token;
 
-            var result1 = Task.Run(() => Fib(42));
-            var result2 = Task.Run(() => Fib(41), cts.Token);
+            var progress = new Progress<int>(n => label1.Text = n.ToString());
+
+            var result1 = Task.Run(() => Fib(42, progress));
+            var result2 = Task.Run(() => Fib(41, progress), cts.Token);
 
             try
             {
@@ -50,14 +52,16 @@ namespace WindowsFormsApp1
             }
         }
 
-        public int Fib(int n)
+        public int Fib(int n, IProgress<int> progress)
         {
             token.ThrowIfCancellationRequested();
+
+            progress?.Report(n);
 
             if (n <= 1)
                 return n;
 
-            return Fib(n - 1) + Fib(n - 2);
+            return Fib(n - 1, null) + Fib(n - 2, progress);
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ouderwets
 {
@@ -65,6 +66,13 @@ namespace ouderwets
             {
                 this.Data = data;
             }
+        }
+
+        [TestMethod]
+        public async Task IetsMetAsync()
+        {
+            var result = await Task.Run(() => 3);
+            Assert.AreEqual(3, result);
         }
     }
 }

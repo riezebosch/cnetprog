@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -38,6 +39,28 @@ namespace cnetprog
                 return n;
 
             return Fib(n - 1) + Fib(n - 2);
+        }
+
+        [Fact]
+        public void ParallelLinq()
+        {
+
+            Parallel.ForEach(new int[] { }, i => { });
+            var items = Enumerable.Range(0, 1234444);
+            var query = from i in items.AsParallel()
+                        where Math.Pow(i, 1.3) % 3 == 0
+                        select i;
+
+
+            Assert.NotEqual(0, query.Count());
+
+        }
+
+        [Fact]
+        public async void IetsMetAsyncVoid()
+        {
+            var result = await Task.Run(() => 3);
+            Assert.Equal(3, result);
         }
     }
 }
