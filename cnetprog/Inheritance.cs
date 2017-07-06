@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Xunit;
 
@@ -280,7 +281,7 @@ namespace cnetprog
             string input = "pietje puk";
             string result1 = StringHelpers.RemoveVowels(input);
             string result2 = input.RemoveVowels();
-            
+
             Assert.Equal("ptj pk", result1);
             Assert.Equal("ptj pk", result2);
         }
@@ -290,6 +291,54 @@ namespace cnetprog
         {
             File.Delete("nietbestaandefile.nogiets");
             Path.Combine("first", "second", "CasIngMoetOokNogMee");
+        }
+
+        [Fact]
+        public void ImmutableStructDemo()
+        {
+            var s = new ImmutableStruct(data: 5);
+            var field = s.GetType().GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.NonPublic).Single();
+            Assert.True(field.IsInitOnly);
+        }
+
+        private struct ImmutableStruct
+        {
+            public int Data { get; }
+
+            public ImmutableStruct(int data)
+            {
+                this.Data = data;
+            }
+        }
+
+        [Fact]
+        public void NameHidingDemo()
+        {
+            var b = new Base();
+            Assert.Equal("base", b.Waarde);
+            Assert.Equal("base", b.Override);
+
+            var d = new DerivedMetMethodHiding();
+            Assert.Equal("derived", d.Waarde);
+            Assert.Equal("derived", d.Override);
+
+            Base cast = d;
+            Assert.Equal("base", cast.Waarde);
+            Assert.Equal("derived", cast.Override);
+        }
+
+        private class Base
+        {
+            public string Waarde => "base";
+
+            public virtual string Override => "base";
+        }
+
+        private class DerivedMetMethodHiding : Base
+        {
+            public new string Waarde => "derived";
+
+            public override string Override => "derived";
         }
     }
 
