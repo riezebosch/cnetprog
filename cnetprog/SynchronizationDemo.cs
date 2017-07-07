@@ -14,13 +14,14 @@ namespace cnetprog
         [Fact]
         public void DezeTestMoetWachtenTotErErgensAndersWatGebeurdIs()
         {
-            bool uitgevoerd = false;
-            Done += () => uitgevoerd = true;
 
-            GaIetsUitvoerenFireAndForgetMaarRaiseEventWanneerKlaar();
-            Thread.Sleep(1000);
+            using (var mre = new ManualResetEventSlim())
+            {
+                Done += () => mre.Set();
 
-            Assert.True(uitgevoerd);
+                GaIetsUitvoerenFireAndForgetMaarRaiseEventWanneerKlaar();
+                Assert.True(mre.WaitHandle.WaitOne(TimeSpan.FromSeconds(5)));
+            }
         }
 
         private void GaIetsUitvoerenFireAndForgetMaarRaiseEventWanneerKlaar()
