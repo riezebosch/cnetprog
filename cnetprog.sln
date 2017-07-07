@@ -15,7 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp1.Tests", "WinFo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkOudDemo", "EntityFrameworkOudDemo\EntityFrameworkOudDemo.csproj", "{26B83383-B4C2-4335-A823-BC6789C041BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiCoreDemo", "WebApiCoreDemo\WebApiCoreDemo.csproj", "{AC766140-3BE9-465F-AF50-103FDA856E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiCoreDemo", "WebApiCoreDemo\WebApiCoreDemo.csproj", "{AC766140-3BE9-465F-AF50-103FDA856E67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesApi", "SeriesApi\SeriesApi.csproj", "{CED4492E-28A1-4E54-92D7-546357005965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesApi.Tests", "SeriesApi.Tests\SeriesApi.Tests.csproj", "{6E38A226-4C2A-49D3-BB15-7E9991A52FD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{AC766140-3BE9-465F-AF50-103FDA856E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC766140-3BE9-465F-AF50-103FDA856E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC766140-3BE9-465F-AF50-103FDA856E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED4492E-28A1-4E54-92D7-546357005965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED4492E-28A1-4E54-92D7-546357005965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED4492E-28A1-4E54-92D7-546357005965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED4492E-28A1-4E54-92D7-546357005965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E38A226-4C2A-49D3-BB15-7E9991A52FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E38A226-4C2A-49D3-BB15-7E9991A52FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E38A226-4C2A-49D3-BB15-7E9991A52FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E38A226-4C2A-49D3-BB15-7E9991A52FD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

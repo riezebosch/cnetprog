@@ -62,5 +62,15 @@ namespace cnetprog
             var result = await Task.Run(() => 3);
             Assert.Equal(3, result);
         }
+
+        [Fact]
+        public async Task MaakEenLijstjeVanTasksMetSelectEnAwaitZeAllemaal()
+        {
+            int[] ids = { 1, 2, 3, 4 };
+            var tasks = ids.Select(id => Task.Run(() => id * 2));
+
+            int[] result = await Task.WhenAll(tasks);
+            Assert.Equal(new[] { 2, 4, 6, 8 }, result);
+        }
     }
 }
