@@ -10,6 +10,8 @@ namespace WebApiCoreDemo.Controllers
     {
         public async Task<IActionResult> Index()
         {
+            ViewBag.Voornaam = "pietje";
+
             var model = await cnetprog.TPL.FibAsync(42);
             return View(model);
         }
